@@ -1,4 +1,4 @@
-package com.plumcity.plum_city.templates;
+package com.plumcity.plum_city.controller;
 
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
