@@ -5,79 +5,56 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
-import java.util.Objects;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-import org.hibernate.proxy.HibernateProxy;
 
 @Entity
-@Table(name = "todo_items") // Map the class to the database table
-@Getter
-@Setter
-@ToString
+@Table(name = "todo_items", schema = "dbo")
+@Data
 @RequiredArgsConstructor
-@NoArgsConstructor
-@AllArgsConstructor // Lombok annotations to generate constructors, getters, and setters
 public class TodoItem {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto-increment strategy
-  private Integer id;
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "id", nullable = false)
+  private Long id;
 
-  @Column(nullable = false) // Title cannot be null
+  @Column(nullable = false)
   private String title;
 
-  @Column(columnDefinition = "TEXT") // For longer descriptions
+  @Column(columnDefinition = "TEXT")
   private String description;
 
-  @Column(nullable = false, length = 50) // Status cannot be null
+  @Column(length = 50)
   private String status;
 
-  @Column(name = "created_at", updatable = false) // Do not update this field
+  @Column(updatable = false)
   private LocalDateTime createdAt;
 
-  @Column(name = "updated_at")
-  private LocalDateTime updatedAt;
+  @Column private LocalDateTime updatedAt;
+
+  @PrePersist
+  protected void onCreate() {
+    createdAt = LocalDateTime.now();
+  }
 
   @Override
   public final boolean equals(Object o) {
-    // Check reference equality first
     if (this == o) {
       return true;
     }
-
-    // Check if 'o' is null or not an instance of TodoItemService
-    if (!(o instanceof TodoItem that)) {
+    if (o == null || getClass() != o.getClass()) {
       return false;
     }
-
-    // Handle HibernateProxy for both 'this' and 'o'
-    Class<?> oEffectiveClass = (o instanceof HibernateProxy hibernateProxy)
-        ? hibernateProxy.getHibernateLazyInitializer().getPersistentClass()
-        : that.getClass(); // Use 'that' instead of 'o' to avoid re-evaluating the type
-
-    Class<?> thisEffectiveClass = (this instanceof HibernateProxy hibernateProxyThis)
-        ? hibernateProxyThis.getHibernateLazyInitializer().getPersistentClass()
-        : this.getClass();
-
-    // Compare the effective classes
-    if (!Objects.equals(thisEffectiveClass, oEffectiveClass)) {
-      return false;
-    }
-
-    // Compare the IDs
-    return getId() != null && Objects.equals(getId(), that.getId());
+    TodoItem todoItem = (TodoItem) o;
+    return id != null && id.equals(todoItem.id);
   }
 
   @Override
   public final int hashCode() {
-    return this instanceof HibernateProxy hibernateProxy ? hibernateProxy.getHibernateLazyInitializer()
-        .getPersistentClass().hashCode() : getClass().hashCode();
+    return id != null ? id.hashCode() : 0;
   }
 }
