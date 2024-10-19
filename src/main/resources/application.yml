@@ -2,7 +2,9 @@ spring:
   application:
     name: plum-city
   datasource:
-    url: jdbc:sqlserver://plumcity.database.windows.net:1433;database=plum-city;user=${DB_USERNAME}@plumcity;password=${DB_PASSWORD};encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;
+    url: jdbc:sqlserver://plumcity.database.windows.net:1433;database=plum-city;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
     azure:
       passwordless-enabled: true
