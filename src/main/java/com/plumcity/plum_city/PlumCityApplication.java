@@ -9,5 +9,4 @@ public class PlumCityApplication {
   public static void main(String[] args) {
     SpringApplication.run(PlumCityApplication.class, args);
   }
-
 }
