@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class PlumCityApplication {
 
   public static void main(String[] args) {
+    log.info("Environment Variables");
     System.getenv()
         .forEach(
             (key, value) -> {
