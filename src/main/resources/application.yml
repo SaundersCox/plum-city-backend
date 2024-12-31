@@ -2,12 +2,14 @@ spring:
   application:
     name: plum-city
   datasource:
-    url: jdbc:sqlserver://plumcity.database.windows.net:1433;database=plum-city;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
-    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-    azure:
-      passwordless-enabled: true
+    url: jdbc:h2:mem:testdb;MODE=MSSQLServer
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: password
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
   sql:
     init:
       mode: always
@@ -18,19 +20,6 @@ spring:
   output:
     ansi:
       enabled: always
-  # See 'Spring Cloud Azure authentication'
-  cloud:
-    azure:
-      credential:
-        managed-identity-enabled: true
-        client-id: ${AZURE_CLIENT_ID}
-        client-secret: ${AZURE_CLIENT_SECRET}
-      profile:
-        tenant-id: 06192081-64e3-47d7-a49e-064fc97f6be6
-      keyvault:
-        enabled: true
-        secret:
-          endpoint: https://plum-city-vault.vault.azure.net/
 
 logging:
   level:
