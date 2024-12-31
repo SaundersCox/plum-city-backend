@@ -14,5 +14,6 @@ FROM eclipse-temurin:21-jdk
 WORKDIR /app
 VOLUME /tmp
 COPY --from=build /app/target/*.jar app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
+RUN chmod +x ./app/start-app.sh
+ENTRYPOINT ["/app/start-app.sh"]
 EXPOSE 8080
