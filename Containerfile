@@ -1,10 +1,6 @@
 # Build time
 FROM eclipse-temurin:21-jdk AS build
 WORKDIR /app
-COPY pom.xml .
-COPY src src
-FROM eclipse-temurin:21-jdk
-WORKDIR /app
 
 COPY pom.xml .
 COPY src src
@@ -15,6 +11,7 @@ RUN ./mvnw clean package -DskipTests
 
 # Runtime
 FROM eclipse-temurin:21-jdk
+WORKDIR /app
 VOLUME /tmp
 COPY --from=build /app/target/*.jar app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]
