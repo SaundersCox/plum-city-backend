@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    url: jdbc:sqlserver://plumcity.database.windows.net:1433;database=plum-city;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  sql:
+    init:
+      mode: always
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  output:
+    ansi:
+      enabled: always
+
+logging:
+  level:
+    root: warn
