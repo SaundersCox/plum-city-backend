@@ -10,9 +10,6 @@ spring:
   jpa:
     hibernate:
       ddl-auto: validate
-  output:
-    ansi:
-      enabled: always
 
 logging:
   level:
