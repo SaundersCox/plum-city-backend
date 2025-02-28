@@ -11,10 +11,10 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "item")
-@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Getter
 public class Item extends BaseEntity {
 
   @Column(nullable = false)
