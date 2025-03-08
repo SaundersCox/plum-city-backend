@@ -1,3 +1,10 @@
 spring:
   application:
     name: plum-city
+  jpa:
+    open-in-view: false
+
+app:
+  web-client:
+    open-weather:
+      api-key: a55836ef05a09e198e9803860c4aeb6d

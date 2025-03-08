@@ -7,10 +7,10 @@ import org.springframework.boot.context.properties.NestedConfigurationProperty;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ConfigurationProperties(prefix = "custom")
+@ConfigurationProperties(prefix = "app")
 @Getter
 @Setter
-public class CustomConfig {
+public class AppConfig {
 
   private String myValue;
   private Integer myNum;

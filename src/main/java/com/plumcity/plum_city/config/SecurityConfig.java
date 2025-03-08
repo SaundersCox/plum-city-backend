@@ -1,4 +1,4 @@
-package com.plumcity.plum_city;
+package com.plumcity.plum_city.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
