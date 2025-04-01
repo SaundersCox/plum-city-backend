@@ -18,6 +18,6 @@ public class ItemRequestDto {
 
   @NotNull(message = "Price is required")
   @DecimalMin(value = "0.00", inclusive = false, message = "Price must be greater than zero")
-  @Digits(integer = 10, fraction = 2, message = "Price must have up to 10 digits and 2 decimal places")
+  @Digits(integer = 6, fraction = 2, message = "Price must have up to 10 digits and 2 decimal places")
   private Double price;
 }

@@ -8,3 +8,11 @@ app:
   web-client:
     open-weather:
       api-key: a55836ef05a09e198e9803860c4aeb6d
+    the-cat-api:
+      api-key: live_HF7RSKlt4h7myMX66y0yMWYA3Ekb33zbJNEB41zPrHevQeeEt9AJ51WHFAVPVQcH
+  denodo:
+    datasource:
+      jdbc-url: ${DENODO_URL}
+      username: ${DENODO_USERNAME}
+      password: ${DENODO_PASSWORD}
+      driver-class-name: com.denodo.vdp.jdbc.Driver

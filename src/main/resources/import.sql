@@ -1,0 +1,9 @@
+--INSERT INTO ITEMS (id, created_at, updated_at, price, name, description)
+--VALUES (
+--    '2b8a2e01-da93-418b-a058-2b8bbee6898a',
+--    '2025-03-14T11:47:00.7062256',
+--    '2025-03-14T11:47:00.7062256',
+--    29.99,
+--    'Premium Widget',
+--    'High-quality widget with advanced features'
+--);

@@ -6,12 +6,14 @@ import com.plumcity.plum_city.dto.ItemResponseDto;
 import com.plumcity.plum_city.entity.Item;
 import com.plumcity.plum_city.mapper.ItemMapper;
 import com.plumcity.plum_city.repository.ItemRepository;
-import java.util.Optional;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,13 +29,27 @@ public class ItemService {
   /**
    * Retrieves Items with pagination and sorting.
    *
-   * @param pageable pagination and sorting
    * @return page of items
    */
   @Transactional(readOnly = true)
-  public Page<ItemResponseDto> getItems(Pageable pageable) {
-    Page<Item> itemPage = itemRepository.findAll(pageable);
+  public Page<ItemResponseDto> getItems(int page, int size, String sortBy, String sortDirection) {
+    Sort sort = Sort.unsorted();
+    if ("ASC".equalsIgnoreCase(sortDirection)) {
+      sort = Sort.by(Direction.ASC, sortBy);
+    } else if ("DESC".equalsIgnoreCase(sortDirection)) {
+      sort = Sort.by(Direction.DESC, sortBy);
+    }
+    PageRequest pageRequest = PageRequest.of(page, size, sort);
+    Page<Item> itemPage = itemRepository.findAll(pageRequest);
     return itemPage.map(itemMapper::toDto);
+  }
+
+  @Transactional(readOnly = true)
+  @Cacheable(value = "itemCache", key = "#id", unless = "#result == null")
+  public ItemResponseDto getItemById(UUID id) {
+    return itemRepository.findById(id)
+        .map(itemMapper::toDto)
+        .orElseThrow(() -> new RuntimeException("Fail")); // TODO: handle exception
   }
 
   /**
@@ -46,12 +62,6 @@ public class ItemService {
     Item item = itemMapper.toEntity(itemRequestDto);
     Item savedItem = itemRepository.save(item);
     return itemMapper.toDto(savedItem);
-  }
-
-
-
-  public Optional<Item> getItemById(UUID id) {
-    return itemRepository.findById(id);
   }
 
   public boolean deleteItem(UUID id) {

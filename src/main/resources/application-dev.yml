@@ -1,4 +1,7 @@
 spring:
+  security:
+    user:
+      password: ${SECURITY_PASSWORD}
   datasource:
     url: jdbc:h2:mem:testdb;MODE=MSSQLServer
     driver-class-name: org.h2.Driver
@@ -12,7 +15,6 @@ spring:
     init:
       mode: always
   jpa:
-    show-sql: true
     hibernate:
       ddl-auto: create-drop
     defer-datasource-initialization: true
